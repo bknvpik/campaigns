@@ -1,9 +1,11 @@
 export interface Campaign {
-    name?: string;
-    keywords?: string[];
-    bid?: number;
-    fund?: number;
-    status?: boolean;
-    town?: string;
-    radius?: string;
+    name: string;
+    keywords: string[];
+    details: {
+        bid: number;
+        fund: number;
+        status: boolean;
+        town: string;
+        radius: number;
+    }
 };

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/database';
 import { CampaignsService } from './campaigns.service';
 import { Campaign } from './models/Campaign';
+import { Resource } from './models/Resource';
+import { ResourcesService } from './resources.service';
 
 @Component({
   selector: 'app-root',
@@ -10,23 +11,27 @@ import { Campaign } from './models/Campaign';
 })
 export class AppComponent {
   title = "campaigns";
-  campaigns : Campaign[] = [];
-  constructor(private campaignsService: CampaignsService) {
-  }
-
-  private _balance = 1000;
+  campaigns: Campaign[] = [];
+  resources: Resource = {
+    balance: 0,
+    keywords: [],
+    towns: []
+  };
   
-  get balance() {
-    return this._balance;
-  }
-
-  set balance(newValue: number) {
-    this.balance = newValue;
-  }
+  constructor(
+    private readonly campaignsService: CampaignsService,
+    private readonly resourcesService: ResourcesService
+  ) {}
 
   ngOnInit() {
     this.campaignsService.getCampaigns().subscribe(campaigns => {
       this.campaigns = campaigns;
-    })
+      console.log(this.campaigns);
+    });
+    this.resourcesService.getResources().subscribe(resources => {
+      this.resources = resources[0];
+      console.log(this.resources);
+    });
   }
+
 }

@@ -2,15 +2,10 @@
     <h1 clas="campaign__name">{{ campaign.name }}</h1>
     <p class="campaign__keywords">{{ campaign.keywords }}</p>
     <div class="campaign__details">
-        <campaign-detail>
-        </campaign-detail>
-        <campaign-detail> 
-        </campaign-detail>
-        <campaign-detail>
-        </campaign-detail>
+        <campaign-detail *ngFor="let detail of campaign.details | keyvalue" [detail]="detail"></campaign-detail>
     </div>
     <div class="campaign__buttons">
         <button class="campaign__modify">modify</button>
-        <button class="campaign__delete">delete</button>
+        <button class="campaign__delete" (click)="deleteCampaign($event, campaign)">delete</button>
     </div>
 </div>

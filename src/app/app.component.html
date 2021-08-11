@@ -1,10 +1,11 @@
 <div class="container">
   <header class="header">
-    <button class="add-button">add campaign</button>
     <div class="balance">
       <h3 class="balance__text">BALANCE:</h3>
-      <p class="balance__value">{{ balance }}</p>
+      <p class="balance__value">{{ resources.balance }}</p>
     </div>
+    <create-form [towns]="resources.towns" [balance]="resources.balance">
+    </create-form>
   </header>
     <div class="campaigns" [hidden]="campaigns.length == 0">
       <campaign *ngFor="let campaign of campaigns" [campaign]="campaign">
@@ -13,6 +14,4 @@
     <div class="no-campaigns" [hidden]="campaigns.length > 0">
       No campaigns yet!
     </div>
-    <create-form>
-    </create-form>
 </div>

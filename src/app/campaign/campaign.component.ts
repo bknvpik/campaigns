@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CampaignsService } from '../campaigns.service';
 import { Campaign } from '../models/Campaign';
 
 @Component({
@@ -8,7 +9,12 @@ import { Campaign } from '../models/Campaign';
 })
 export class CampaignComponent implements OnInit {
   @Input() campaign!: Campaign;
-  constructor() { }
+  constructor(private readonly campaignService: CampaignsService) { }
+
+  deleteCampaign(event: any, campaign: any) {
+    this.campaignService.deleteCampaign(campaign.customID);
+    console.log(campaign.customID);
+  }
 
   ngOnInit(): void {
   }
