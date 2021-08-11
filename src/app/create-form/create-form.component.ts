@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Form, FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CampaignsService } from '../campaigns.service';
 import { Campaign } from '../models/Campaign';
+import { Resource } from '../models/Resource';
+import { ResourcesService } from '../resources.service';
 
 @Component({
   selector: 'create-form',
@@ -10,6 +12,10 @@ import { Campaign } from '../models/Campaign';
 })
 export class CreateFormComponent implements OnInit {
 
+  @Input() towns!: string[];
+
+  balance!: number;
+  resources!: any;
   createForm!: FormGroup;
 
   campaign: Campaign = {
@@ -24,24 +30,27 @@ export class CreateFormComponent implements OnInit {
     }
   }
 
-  @Input() towns!: string[];
-  @Input() balance!: number;
-
   constructor(
     private readonly fb: FormBuilder,
-    private readonly campaignService: CampaignsService
+    private readonly campaignService: CampaignsService,
+    private readonly resourcesService: ResourcesService,
   ) {}
 
   createKeyword(name?: string): FormArray {
     return this.fb.array([name]);
   }
 
-  addKeyword() {
+  addKeyword(): void {
     const keywords = this.createForm.get('keywords') as FormArray;
-    keywords.push(this.createKeyword(this.createForm.value.keyword));
-    this.createForm.get('keyword')?.reset('');
+    const keyword = this.createForm.value.keyword;
+    if(keyword.length) {
+      keywords.push(this.createKeyword(keyword));
+      this.createForm.get('keyword')?.reset('');
+    }
+    return;
   }
-  onSubmit() {
+
+  onSubmit(): void {
     const {name, keywords, details} = this.createForm.value;
     this.campaign.name = name;
     const destructed: string[] = [];
@@ -55,21 +64,29 @@ export class CreateFormComponent implements OnInit {
     this.campaignService.createCampaign(this.campaign);
   }
 
-  ngOnInit(): void {
+  onTypeBalance() {
+    const currentFund = this.createForm.value.details.fund;
+    console.log(currentFund);
+    currentFund > this.balance ? this.createForm.setErrors({'invalid': true}) : null
+  }
 
+  ngOnInit(): void {
+    this.resourcesService.getResources().subscribe(resources => {
+      this.resources = resources[0];
+      this.balance = this.resources.balance;
+    });
     this.createForm = this.fb.group({
-      name: this.fb.control(''),
+      name: this.fb.control('', Validators.required),
       keyword: '',
-      keywords: this.fb.array([]),
+      keywords: this.fb.array([], Validators.required),
       details: this.fb.group({
-        bid: 100,
-        fund: 0,
-        status: false,
+        bid: this.fb.control(100, Validators.compose([Validators.required, Validators.min(100)])),
+        fund: this.fb.control(0, Validators.required),
+        status: this.fb.control(false, Validators.required),
         town: 'Cracow',
-        radius: 0
+        radius: this.fb.control(0, Validators.required)
       })
     })
     this.createForm.valueChanges.subscribe(console.log);
   }
-
 }

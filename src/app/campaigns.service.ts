@@ -13,7 +13,6 @@ export class CampaignsService {
   constructor(private afs: AngularFirestore) {
     this.campaignsCollection = afs.collection<Campaign>('campaigns');
     this.campaign$ = this.campaignsCollection.valueChanges({ idField: 'customID' });
-    this.campaignDoc
   }
 
   getCampaigns(): Observable<Campaign[]> {
