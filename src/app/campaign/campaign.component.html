@@ -1,0 +1,22 @@
+<div class="campaign" *ngFor="let campaign of campaigns">
+    <h1 class="campaign-name">{{ campaign.name }}</h1>
+    <p class="campaign-keywords">keywords: {{ campaign.keywords }}</p>
+    <div class="campaign-details">
+        <div class="campaign-detail" *ngFor="let detail of campaign.details | keyvalue">
+            <h3 class="campaign-detail-name">
+                {{ detail.key }}
+            </h3>
+            <p class="campaign-detail-value">
+                {{ detail.value }}
+            </p>
+        </div>
+    </div>
+    <div class="campaign-buttons">
+        <button class="campaign-modify" (click)="modifyCampaign(campaign)">modify</button>
+        <button class="campaign-close" (click)="clearAll()" *ngIf="editState">close</button>
+        <button class="campaign-delete" (click)="deleteCampaign(campaign)">delete</button>
+    </div>
+    <div *ngIf="editState && campaignToEdit.customID == campaign.customID">
+        <campaign-form [campaignToModify]="campaign" [resources]="resources" [clearAll]="clearAll"></campaign-form>
+    </div>
+</div>
