@@ -1,0 +1,68 @@
+@use '../../index' as s;
+
+.campaign {
+    margin-top: 2rem;
+    padding: 0.5rem;
+    @include s.shadows();
+}
+
+h1,
+h2,
+h3,
+p {
+    padding-top: 0.5rem;
+}
+
+.campaign-keywords {
+    overflow: auto;
+}
+
+.campaign-detail {
+    display: flex;
+    & > * {
+        flex-basis: 100%;
+    }
+}
+
+.campaign-name {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.campaign-buttons {
+    margin-top: 1rem;
+    display: flex;
+    & > * {
+        flex-basis: 100%;
+    }
+    button {
+        border: none;
+        cursor: pointer;
+        height: 2rem;
+    }
+}
+
+.campaign-modify {
+    background: s.$main;
+    font-weight: bold;
+    &:hover {
+        background: s.$green;
+    }
+}
+
+.campaign-delete {
+    background: s.$red;
+    font-weight: bold;
+    &:hover {
+        background: red;
+    }
+}
+
+.campaign-close {
+    background: s.$shadow;
+    font-weight: bold;
+    color: white;
+    &:hover {
+        background: s.$dark;
+    }
+}
