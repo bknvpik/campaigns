@@ -10,7 +10,7 @@ This project is currently in development.
 
 ## Project Preview
 
-TBD
+https://suspicious-knuth-697593.netlify.app
 
 ## Installation and Setup Instructions
 
