@@ -11,7 +11,7 @@ import { ResourcesService } from './resources.service';
 })
 export class AppComponent {
   title = "campaigns";
-  campaigns: Campaign[] = [];
+  balance!: number;
   resources: Resource = {
     balance: 0,
     keywords: [],
@@ -24,9 +24,9 @@ export class AppComponent {
   ) {}
 
   ngOnInit() {
-    this.campaignsService.getCampaigns().subscribe(campaigns => {
-      this.campaigns = campaigns;
-      console.log(this.campaigns);
+    this.resourcesService.getResources().subscribe(resources => {
+      this.resources = resources[0];
+      this.balance = this.resources.balance;
     });
     this.resourcesService.getResources().subscribe(resources => {
       this.resources = resources[0];

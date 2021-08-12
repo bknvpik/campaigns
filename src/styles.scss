@@ -1,9 +1,19 @@
 @use '_variables' as var;
 
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
-    background: white;
+}
+
+body,
+h1,
+h2,
+h3,
+p {
+    margin: 0;
+}
+
+body {
     font-family: var.$primary-font;
+    font-weight: 400;
+    font-size: 1.3125rem;
 }

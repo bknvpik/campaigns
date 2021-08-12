@@ -1,17 +1,18 @@
 <div class="container">
-  <header class="header">
+  <div class="left">
     <div class="balance">
-      <h3 class="balance__text">BALANCE:</h3>
-      <p class="balance__value">{{ resources.balance }}</p>
+      <div class="img-container">
+        <img src="../assets/emerald.svg" alt="logo"/>
+      </div>
+      <div class="balance-details">
+        <h3 class="balance-text">BALANCE:</h3>
+        <p class="balance-value">{{ resources.balance }}</p>
+      </div>
     </div>
-    <create-form [towns]="resources.towns">
-    </create-form>
-  </header>
-    <div class="campaigns" [hidden]="campaigns.length == 0">
-      <campaign *ngFor="let campaign of campaigns" [campaign]="campaign">
-      </campaign>
-    </div>
-    <div class="no-campaigns" [hidden]="campaigns.length > 0">
-      No campaigns yet!
-    </div>
+    <campaign-form [resources]="resources"></campaign-form>
+  </div>
+  <div class="right">
+    <campaign [resources]="resources">
+    </campaign>
+  </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CampaignsService } from '../campaigns.service';
 import { Campaign } from '../models/Campaign';
+import { ResourcesService } from '../resources.service';
 
 @Component({
   selector: 'campaign',
@@ -8,15 +9,36 @@ import { Campaign } from '../models/Campaign';
   styleUrls: ['./campaign.component.scss']
 })
 export class CampaignComponent implements OnInit {
-  @Input() campaign!: Campaign;
-  constructor(private readonly campaignService: CampaignsService) { }
+  @Input() resources!: any;
+  campaigns: any[] = [];
+  editState: boolean = false;
+  campaignToEdit!: any;
 
-  deleteCampaign(event: any, campaign: any) {
-    this.campaignService.deleteCampaign(campaign.customID);
-    console.log(campaign.customID);
+  constructor(
+    private readonly campaignsService: CampaignsService,
+    private readonly resourcesService: ResourcesService
+  ) { }
+
+  modifyCampaign(event: any, campaign: Campaign) {
+    this.editState = true;
+    this.campaignToEdit = campaign;
+  }
+
+  deleteCampaign(event: any, campaign: any): void {
+    this.campaignsService.deleteCampaign(campaign.customID);
+    const newBalance = this.resources.balance + campaign.details.fund;
+    this.resourcesService.updateBalance(this.resources.customID, newBalance);
+  }
+
+  clearAll = (): void => {
+    this.editState = false;
+    this.campaignToEdit = null;
   }
 
   ngOnInit(): void {
+      this.campaignsService.getCampaigns().subscribe(campaigns => {
+      this.campaigns = campaigns;
+      console.log(this.campaigns);
+    });
   }
-
 }

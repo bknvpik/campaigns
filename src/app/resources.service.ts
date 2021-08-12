@@ -9,16 +9,16 @@ import { Resource } from './models/Resource';
 export class ResourcesService {
 
   private resourcesCollection!: AngularFirestoreCollection<Resource>;
-  resource$: Observable<Resource[]>;
+  resources: Observable<Resource[]>;
   private resourcesnDoc!: AngularFirestoreDocument<Resource>;
 
   constructor(private afs: AngularFirestore) {
     this.resourcesCollection = afs.collection<Resource>('resources');
-    this.resource$ = this.resourcesCollection.valueChanges({ idField: 'customID' });
+    this.resources = this.resourcesCollection.valueChanges({ idField: 'customID' });
   }
 
   getResources(): Observable<Resource[]> {
-    return this.resource$;
+    return this.resources;
   }
 
   updateBalance(id: string, newBalance: number): void {

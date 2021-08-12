@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreCollectionGroup, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Campaign } from './models/Campaign';
 
@@ -8,15 +8,16 @@ import { Campaign } from './models/Campaign';
 })
 export class CampaignsService {
   private campaignsCollection!: AngularFirestoreCollection<Campaign>;
-  campaign$: Observable<Campaign[]>;
+  campaigns: Observable<Campaign[]>;
   private campaignDoc!: AngularFirestoreDocument<Campaign>;
-  constructor(private afs: AngularFirestore) {
+  constructor(
+    private afs: AngularFirestore) {
     this.campaignsCollection = afs.collection<Campaign>('campaigns');
-    this.campaign$ = this.campaignsCollection.valueChanges({ idField: 'customID' });
+    this.campaigns = this.campaignsCollection.valueChanges({ idField: 'customID' });
   }
 
   getCampaigns(): Observable<Campaign[]> {
-    return this.campaign$;
+    return this.campaigns;
   }
 
   createCampaign(campaign: Campaign): void {
@@ -28,7 +29,8 @@ export class CampaignsService {
     this.campaignDoc.delete();
   }
 
-  modifyCampaign(id: string, campaign: Campaign) {
-
+  modifyCampaign(id: string, campaign: Campaign): void {
+    this.campaignDoc = this.afs.doc(`campaigns/${id}`);
+    this.campaignDoc.update(campaign);
   }
 }

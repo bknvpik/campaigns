@@ -1,11 +1,22 @@
-<div class="campaign">
-    <h1 clas="campaign__name">{{ campaign.name }}</h1>
-    <p class="campaign__keywords">{{ campaign.keywords }}</p>
-    <div class="campaign__details">
-        <campaign-detail *ngFor="let detail of campaign.details | keyvalue" [detail]="detail"></campaign-detail>
+<div class="campaign" *ngFor="let campaign of campaigns">
+    <h1 class="campaign-name">{{ campaign.name }}</h1>
+    <p class="campaign-keywords">keywords: {{ campaign.keywords }}</p>
+    <div class="campaign-details">
+        <div class="campaign-detail" *ngFor="let detail of campaign.details | keyvalue">
+            <h3 class="campaign-detail-name">
+                {{ detail.key }}
+            </h3>
+            <p class="campaign-detail-value">
+                {{ detail.value }}
+            </p>
+        </div>
     </div>
-    <div class="campaign__buttons">
-        <button class="campaign__modify">modify</button>
-        <button class="campaign__delete" (click)="deleteCampaign($event, campaign)">delete</button>
+    <div class="campaign-buttons">
+        <button class="campaign-modify" (click)="modifyCampaign($event, campaign)">modify</button>
+        <button class="campaign-close" (click)="clearAll()">close</button>
+        <button class="campaign-delete" (click)="deleteCampaign($event, campaign)">delete</button>
+    </div>
+    <div *ngIf="editState && campaignToEdit.customID == campaign.customID">
+        <campaign-form [campaignToModify]="campaign" [resources]="resources" [clearAll]="clearAll"></campaign-form>
     </div>
 </div>
