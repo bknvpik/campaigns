@@ -12,9 +12,9 @@
         </div>
     </div>
     <div class="campaign-buttons">
-        <button class="campaign-modify" (click)="modifyCampaign($event, campaign)">modify</button>
-        <button class="campaign-close" (click)="clearAll()">close</button>
-        <button class="campaign-delete" (click)="deleteCampaign($event, campaign)">delete</button>
+        <button class="campaign-modify" (click)="modifyCampaign(campaign)">modify</button>
+        <button class="campaign-close" (click)="clearAll()" *ngIf="editState">close</button>
+        <button class="campaign-delete" (click)="deleteCampaign(campaign)">delete</button>
     </div>
     <div *ngIf="editState && campaignToEdit.customID == campaign.customID">
         <campaign-form [campaignToModify]="campaign" [resources]="resources" [clearAll]="clearAll"></campaign-form>

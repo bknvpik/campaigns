@@ -9,22 +9,23 @@ import { ResourcesService } from '../resources.service';
   styleUrls: ['./campaign.component.scss']
 })
 export class CampaignComponent implements OnInit {
+
   @Input() resources!: any;
-  campaigns: any[] = [];
+  campaigns!: any[];
   editState: boolean = false;
   campaignToEdit!: any;
 
   constructor(
     private readonly campaignsService: CampaignsService,
     private readonly resourcesService: ResourcesService
-  ) { }
+  ) {}
 
-  modifyCampaign(event: any, campaign: Campaign) {
+  modifyCampaign(campaign: Campaign): void {
     this.editState = true;
     this.campaignToEdit = campaign;
   }
 
-  deleteCampaign(event: any, campaign: any): void {
+  deleteCampaign(campaign: any): void {
     this.campaignsService.deleteCampaign(campaign.customID);
     const newBalance = this.resources.balance + campaign.details.fund;
     this.resourcesService.updateBalance(this.resources.customID, newBalance);
@@ -38,7 +39,7 @@ export class CampaignComponent implements OnInit {
   ngOnInit(): void {
       this.campaignsService.getCampaigns().subscribe(campaigns => {
       this.campaigns = campaigns;
-      console.log(this.campaigns);
     });
   }
+
 }

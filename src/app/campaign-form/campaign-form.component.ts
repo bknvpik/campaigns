@@ -85,8 +85,6 @@ export class CampaignFormComponent implements OnChanges {
     }
     else {
       this.prepareData();
-      console.log('submitted!');
-      console.log(this.campaign);
       if(this.resources.balance >= this.campaign.details.fund) {
         this.campaignsService.createCampaign(this.campaign);
         const newBalance: number = this.resources.balance - this.campaign.details.fund;
@@ -100,7 +98,6 @@ export class CampaignFormComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
-    console.log(this.resources.balance)
     if(this.campaignToModify) {
       this.createForm = this.fb.group({
         name: this.fb.control(this.campaignToModify.name, Validators.required),
@@ -114,7 +111,6 @@ export class CampaignFormComponent implements OnChanges {
           radius: this.fb.control(this.campaignToModify.details.radius, Validators.required)
         })
       })
-      this.createForm.valueChanges.subscribe(console.log);
     }
     else {
       this.createForm = this.fb.group({
@@ -129,7 +125,7 @@ export class CampaignFormComponent implements OnChanges {
           radius: this.fb.control(0, Validators.required)
         })
       })
-      this.createForm.valueChanges.subscribe(console.log);
     }
   }
+  
 }

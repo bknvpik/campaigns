@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { CampaignFormComponent } from './campaign-form/campaign-form.component';
@@ -19,7 +18,6 @@ import { CampaignsService } from './campaigns.service';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,

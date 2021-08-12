@@ -7,9 +7,11 @@ import { Campaign } from './models/Campaign';
   providedIn: 'root'
 })
 export class CampaignsService {
+
   private campaignsCollection!: AngularFirestoreCollection<Campaign>;
   campaigns: Observable<Campaign[]>;
   private campaignDoc!: AngularFirestoreDocument<Campaign>;
+
   constructor(
     private afs: AngularFirestore) {
     this.campaignsCollection = afs.collection<Campaign>('campaigns');
@@ -33,4 +35,5 @@ export class CampaignsService {
     this.campaignDoc = this.afs.doc(`campaigns/${id}`);
     this.campaignDoc.update(campaign);
   }
+  
 }

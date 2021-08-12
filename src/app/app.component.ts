@@ -10,11 +10,11 @@ import { ResourcesService } from './resources.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
   title = "campaigns";
   balance!: number;
   resources: Resource = {
     balance: 0,
-    keywords: [],
     towns: []
   };
   
@@ -23,14 +23,9 @@ export class AppComponent {
     private readonly resourcesService: ResourcesService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.resourcesService.getResources().subscribe(resources => {
       this.resources = resources[0];
-      this.balance = this.resources.balance;
-    });
-    this.resourcesService.getResources().subscribe(resources => {
-      this.resources = resources[0];
-      console.log(this.resources);
     });
   }
 
